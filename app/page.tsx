@@ -41,7 +41,9 @@ export default function Home() {
     } catch (error) {
       setStatus("error");
       setFeedback(
-        error instanceof Error ? error.message : "Beim Senden ist etwas schiefgelaufen."
+        error instanceof Error
+          ? error.message
+          : "Beim Senden ist etwas schiefgelaufen."
       );
     }
   }
@@ -64,7 +66,11 @@ export default function Home() {
           an der es sich nicht mehr von selbst weiterbewegt.
         </p>
 
-        <form onSubmit={handleSubmit} className="pt-8 space-y-4 max-w-xl mx-auto">
+        <form
+          id="kontakt"
+          onSubmit={handleSubmit}
+          className="pt-8 space-y-4 max-w-xl mx-auto w-full"
+        >
           <input
             type="text"
             placeholder="Dein Name"
@@ -94,10 +100,20 @@ export default function Home() {
 
           <button
             type="submit"
-            className="bg-[#C8A95A] text-white px-8 py-4 rounded-full uppercase tracking-widest text-sm hover:opacity-90 transition"
+            disabled={status === "loading"}
+            className="bg-[#C8A95A] text-white px-8 py-4 rounded-full uppercase tracking-widest text-sm hover:opacity-90 transition disabled:opacity-60"
           >
-            Einen Platz anfragen
+            {status === "loading" ? "Wird gesendet..." : "Einen Platz anfragen"}
           </button>
+
+          <a
+            href="https://wa.me/436641480013?text=Ich%20moechte%20einen%20Platz%20bei%20dir%20anfragen"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-center mt-6 text-sm text-[#28486E] opacity-70 hover:opacity-100"
+          >
+            Oder direkt über WhatsApp schreiben
+          </a>
 
           {feedback ? (
             <p
@@ -108,8 +124,6 @@ export default function Home() {
               {feedback}
             </p>
           ) : null}
-      <form id="kontakt" onSubmit={handleSubmit} className="pt-8 space-y-4 max-w-xl mx-auto"></form>
-      
         </form>
       </div>
     </main>
